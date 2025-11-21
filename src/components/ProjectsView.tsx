@@ -4,13 +4,20 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Badge } from './ui/badge';
+import { useStyle } from '../contexts/StyleContext';
+import { ProjectsViewModern } from './ProjectsViewModern';
 
 interface ProjectsViewProps {
   onViewProject: (projectId: string) => void;
 }
 
 export function ProjectsView({ onViewProject }: ProjectsViewProps) {
+  const { styleMode } = useStyle();
   const [searchTerm, setSearchTerm] = useState('');
+
+  if (styleMode === 'modern') {
+    return <ProjectsViewModern onViewProject={onViewProject} />;
+  }
 
   const projects = [
     { id: '1', company: 'ADCO GmbH', name: 'FENDT 2025', requests: 128, vehicle: 'PROMO SANH PN-22', status: 'active' },

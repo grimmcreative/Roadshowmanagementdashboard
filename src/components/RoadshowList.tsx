@@ -4,9 +4,16 @@ import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Badge } from './ui/badge';
+import { useStyle } from '../contexts/StyleContext';
+import { RoadshowListModern } from './RoadshowListModern';
 
 export function RoadshowList() {
+  const { styleMode } = useStyle();
   const [searchTerm, setSearchTerm] = useState('');
+
+  if (styleMode === 'modern') {
+    return <RoadshowListModern />;
+  }
 
   const roadshows = [
     {
@@ -79,11 +86,11 @@ export function RoadshowList() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'active':
-        return <Badge className="bg-green-50 text-green-700">Aktiv</Badge>;
+        return <Badge className="bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 border-0">Aktiv</Badge>;
       case 'planned':
-        return <Badge className="bg-blue-50 text-blue-700">Geplant</Badge>;
+        return <Badge className="bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border-0">Geplant</Badge>;
       case 'completed':
-        return <Badge className="bg-gray-50 text-gray-700">Abgeschlossen</Badge>;
+        return <Badge className="bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-0">Abgeschlossen</Badge>;
       default:
         return null;
     }
@@ -99,8 +106,8 @@ export function RoadshowList() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-gray-900">Roadshows</h1>
-          <p className="text-gray-500 mt-1">Verwalten Sie alle Ihre Roadshow-Kampagnen</p>
+          <h1 className="text-gray-900 dark:text-gray-100">Roadshows</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">Verwalten Sie alle Ihre Roadshow-Kampagnen</p>
         </div>
         <Button className="bg-blue-600 hover:bg-blue-700">
           <Plus className="w-4 h-4 mr-2" />
@@ -111,7 +118,7 @@ export function RoadshowList() {
       <Card>
         <CardContent className="p-4">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-gray-500" />
             <Input
               placeholder="Roadshows durchsuchen..."
               value={searchTerm}
@@ -128,18 +135,18 @@ export function RoadshowList() {
             <CardContent className="p-6">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <Truck className="w-6 h-6 text-blue-600" />
+                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
+                    <Truck className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                   </div>
                   <div>
-                    <h3 className="text-gray-900">{roadshow.name}</h3>
-                    <p className="text-gray-500">{roadshow.truck}</p>
+                    <h3 className="text-gray-900 dark:text-gray-100">{roadshow.name}</h3>
+                    <p className="text-gray-500 dark:text-gray-400">{roadshow.truck}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
                   {getStatusBadge(roadshow.status)}
-                  <button className="p-1 hover:bg-gray-100 rounded transition-colors">
-                    <MoreVertical className="w-5 h-5 text-gray-400" />
+                  <button className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors">
+                    <MoreVertical className="w-5 h-5 text-gray-400 dark:text-gray-500" />
                   </button>
                 </div>
               </div>
@@ -147,46 +154,46 @@ export function RoadshowList() {
               <div className="space-y-3">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <p className="text-gray-500">Start</p>
-                    <p className="text-gray-900 mt-1">{roadshow.startDate}</p>
+                    <p className="text-gray-500 dark:text-gray-400">Start</p>
+                    <p className="text-gray-900 dark:text-gray-100 mt-1">{roadshow.startDate}</p>
                   </div>
                   <div>
-                    <p className="text-gray-500">Ende</p>
-                    <p className="text-gray-900 mt-1">{roadshow.endDate}</p>
+                    <p className="text-gray-500 dark:text-gray-400">Ende</p>
+                    <p className="text-gray-900 dark:text-gray-100 mt-1">{roadshow.endDate}</p>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-3 border-t border-gray-200">
-                  <div className="flex items-center gap-1 text-gray-600">
+                <div className="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-gray-700">
+                  <div className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
                     <MapPin className="w-4 h-4" />
                     <span>
                       {roadshow.completedStops}/{roadshow.stops} Stops
                     </span>
                   </div>
-                  <div className="flex items-center gap-1 text-gray-600">
+                  <div className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
                     <Calendar className="w-4 h-4" />
                     <span>{roadshow.totalKm} km</span>
                   </div>
                 </div>
 
                 {roadshow.status === 'active' && (
-                  <div className="pt-3 border-t border-gray-200">
+                  <div className="pt-3 border-t border-gray-200 dark:border-gray-700">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-gray-500">Aktueller Standort</span>
-                      <span className="text-gray-900">{roadshow.currentLocation}</span>
+                      <span className="text-gray-500 dark:text-gray-400">Aktueller Standort</span>
+                      <span className="text-gray-900 dark:text-gray-100">{roadshow.currentLocation}</span>
                     </div>
-                    <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                    <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-blue-600 transition-all"
+                        className="h-full bg-blue-600 dark:bg-blue-500 transition-all"
                         style={{ width: `${roadshow.progress}%` }}
                       />
                     </div>
-                    <p className="text-gray-500 mt-1">{roadshow.progress}% abgeschlossen</p>
+                    <p className="text-gray-500 dark:text-gray-400 mt-1">{roadshow.progress}% abgeschlossen</p>
                   </div>
                 )}
               </div>
 
-              <div className="flex gap-2 mt-4 pt-4 border-t border-gray-200">
+              <div className="flex gap-2 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                 <Button variant="outline" className="flex-1">
                   Details
                 </Button>

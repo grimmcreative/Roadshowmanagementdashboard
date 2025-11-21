@@ -53,8 +53,8 @@ export function TourPlanner() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-gray-900">Tour Planer</h1>
-          <p className="text-gray-500 mt-1">Planen Sie Ihre Roadshow-Route mit allen Stops</p>
+          <h1 className="text-gray-900 dark:text-gray-100">Tour Planer</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">Planen Sie Ihre Roadshow-Route mit allen Stops</p>
         </div>
         <Button className="bg-blue-600 hover:bg-blue-700">
           Tour speichern
@@ -74,20 +74,20 @@ export function TourPlanner() {
               </div>
               <div>
                 <Label>Truck auswählen</Label>
-                <select className="w-full mt-1 px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <select className="w-full mt-1 px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                   <option>Truck #A1</option>
                   <option>Truck #B2</option>
                   <option>Truck #C3</option>
                 </select>
               </div>
-              <div className="pt-4 border-t border-gray-200">
+              <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-gray-500">Gesamt Stops:</span>
-                  <span className="text-gray-900">{stops.length}</span>
+                  <span className="text-gray-500 dark:text-gray-400">Gesamt Stops:</span>
+                  <span className="text-gray-900 dark:text-gray-100 font-medium">{stops.length}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-500">Geschätzte KM:</span>
-                  <span className="text-gray-900">{calculateTotalDistance()} km</span>
+                  <span className="text-gray-500 dark:text-gray-400">Geschätzte KM:</span>
+                  <span className="text-gray-900 dark:text-gray-100 font-medium">{calculateTotalDistance()} km</span>
                 </div>
               </div>
             </CardContent>
@@ -161,33 +161,33 @@ export function TourPlanner() {
                 {stops.map((stop, index) => (
                   <div
                     key={stop.id}
-                    className="flex items-start gap-4 p-4 border border-gray-200 rounded-lg hover:border-blue-300 transition-colors"
+                    className="flex items-start gap-4 p-4 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg hover:border-blue-300 dark:hover:border-blue-600 transition-colors"
                   >
-                    <div className="flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-full flex-shrink-0">
+                    <div className="flex items-center justify-center w-8 h-8 bg-blue-600 dark:bg-blue-500 text-white rounded-full flex-shrink-0 font-medium">
                       {index + 1}
                     </div>
                     <div className="flex-1">
                       <div className="flex items-start justify-between">
                         <div>
-                          <h4 className="text-gray-900">{stop.city}</h4>
-                          <p className="text-gray-500 mt-1">{stop.address}</p>
+                          <h4 className="text-gray-900 dark:text-gray-100 font-medium">{stop.city}</h4>
+                          <p className="text-gray-500 dark:text-gray-400 mt-1">{stop.address}</p>
                         </div>
                         {index === 0 && (
-                          <Badge className="bg-green-50 text-green-700">Start</Badge>
+                          <Badge className="bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 border-0">Start</Badge>
                         )}
                         {index === stops.length - 1 && index !== 0 && (
-                          <Badge className="bg-red-50 text-red-700">Ziel</Badge>
+                          <Badge className="bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400 border-0">Ziel</Badge>
                         )}
                       </div>
                       <div className="flex items-center gap-4 mt-2">
                         {stop.event && (
-                          <span className="text-gray-500 flex items-center gap-1">
+                          <span className="text-gray-500 dark:text-gray-400 flex items-center gap-1 text-sm">
                             <MapPin className="w-4 h-4" />
                             {stop.event}
                           </span>
                         )}
                         {stop.date && (
-                          <span className="text-gray-500 flex items-center gap-1">
+                          <span className="text-gray-500 dark:text-gray-400 flex items-center gap-1 text-sm">
                             <Calendar className="w-4 h-4" />
                             {new Date(stop.date).toLocaleDateString('de-DE')}
                           </span>
@@ -199,7 +199,7 @@ export function TourPlanner() {
                         variant="ghost"
                         size="sm"
                         onClick={() => removeStop(stop.id)}
-                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20"
                       >
                         <X className="w-4 h-4" />
                       </Button>
@@ -207,7 +207,7 @@ export function TourPlanner() {
                   </div>
                 ))}
                 {stops.length === 0 && (
-                  <div className="text-center py-8 text-gray-500">
+                  <div className="text-center py-8 text-gray-500 dark:text-gray-400">
                     Noch keine Stops hinzugefügt
                   </div>
                 )}

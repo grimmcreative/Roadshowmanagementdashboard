@@ -2,8 +2,16 @@ import { Truck, Calendar, MapPin, Wrench } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
+import { useStyle } from '../contexts/StyleContext';
+import { TruckManagerModern } from './TruckManagerModern';
 
 export function TruckManager() {
+  const { styleMode } = useStyle();
+
+  if (styleMode === 'modern') {
+    return <TruckManagerModern />;
+  }
+
   const trucks = [
     { id: 1, name: 'PROMO SANH PN-22', type: 'Promo Truck', status: 'active', project: 'FENDT 2025', location: 'München', nextService: '15.12.2025', km: 45000 },
     { id: 2, name: 'SPACE 7 GE-003', type: 'Space Truck', status: 'active', project: 'DYSON 2025', location: 'Hamburg', nextService: '20.12.2025', km: 32000 },
@@ -39,8 +47,8 @@ export function TruckManager() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-gray-900">Truck Manager</h1>
-          <p className="text-gray-500 mt-1">Übersicht und Verwaltung aller Roadshow-Trucks</p>
+          <h1 className="text-gray-900 dark:text-gray-100">Truck Manager</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">Übersicht und Verwaltung aller Roadshow-Trucks</p>
         </div>
         <Button className="bg-blue-600 hover:bg-blue-700">
           Wartung planen

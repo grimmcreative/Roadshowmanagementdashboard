@@ -4,9 +4,16 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Badge } from './ui/badge';
+import { useStyle } from '../contexts/StyleContext';
+import { CompaniesViewModern } from './CompaniesViewModern';
 
 export function CompaniesView() {
+  const { styleMode } = useStyle();
   const [searchTerm, setSearchTerm] = useState('');
+
+  if (styleMode === 'modern') {
+    return <CompaniesViewModern />;
+  }
 
   const companies = [
     { id: 1, name: 'ADCO GmbH', projects: 1, contact: 'Max Mustermann', email: 'max@adco.de', phone: '+49 123 456789', city: 'München', status: 'active' },
@@ -26,8 +33,8 @@ export function CompaniesView() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-gray-900">Unternehmen</h1>
-          <p className="text-gray-500 mt-1">Verwalten Sie alle Kundenunternehmen</p>
+          <h1 className="text-gray-900 dark:text-gray-100">Unternehmen</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">Verwalten Sie alle Kundenunternehmen</p>
         </div>
         <Button className="bg-blue-600 hover:bg-blue-700">
           <Plus className="w-4 h-4 mr-2" />
@@ -44,7 +51,7 @@ export function CompaniesView() {
         <CardContent>
           <div className="mb-4">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-gray-500" />
               <Input
                 placeholder="Unternehmen suchen..."
                 value={searchTerm}
@@ -59,34 +66,34 @@ export function CompaniesView() {
               <Card key={company.id} className="hover:shadow-lg transition-shadow">
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Building2 className="w-6 h-6 text-blue-600" />
+                    <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Building2 className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-gray-900 truncate">{company.name}</h3>
-                      <Badge className="mt-1 bg-blue-50 text-blue-700">
+                      <h3 className="text-gray-900 dark:text-gray-100 truncate">{company.name}</h3>
+                      <Badge className="mt-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border-0">
                         {company.projects} Projekt{company.projects > 1 ? 'e' : ''}
                       </Badge>
                     </div>
                   </div>
 
                   <div className="mt-4 space-y-2">
-                    <div className="flex items-center gap-2 text-gray-600">
+                    <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
                       <Mail className="w-4 h-4 flex-shrink-0" />
                       <span className="truncate text-sm">{company.email}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-gray-600">
+                    <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
                       <Phone className="w-4 h-4 flex-shrink-0" />
                       <span className="text-sm">{company.phone}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-gray-600">
+                    <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
                       <MapPin className="w-4 h-4 flex-shrink-0" />
                       <span className="text-sm">{company.city}</span>
                     </div>
                   </div>
 
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <p className="text-gray-500 text-sm">Ansprechpartner: {company.contact}</p>
+                  <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <p className="text-gray-500 dark:text-gray-400 text-sm">Ansprechpartner: {company.contact}</p>
                   </div>
 
                   <Button variant="outline" className="w-full mt-4">

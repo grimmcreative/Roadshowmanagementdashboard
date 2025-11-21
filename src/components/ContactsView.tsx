@@ -4,9 +4,16 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Avatar, AvatarFallback } from './ui/avatar';
+import { useStyle } from '../contexts/StyleContext';
+import { ContactsViewModern } from './ContactsViewModern';
 
 export function ContactsView() {
+  const { styleMode } = useStyle();
   const [searchTerm, setSearchTerm] = useState('');
+
+  if (styleMode === 'modern') {
+    return <ContactsViewModern />;
+  }
 
   const contacts = [
     { id: 1, name: 'Max Mustermann', company: 'ADCO GmbH', role: 'Projektleiter', email: 'max@adco.de', phone: '+49 123 456789' },
@@ -37,8 +44,8 @@ export function ContactsView() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-gray-900">Kontakte</h1>
-          <p className="text-gray-500 mt-1">Alle Ansprechpartner und Kontaktpersonen</p>
+          <h1 className="text-gray-900 dark:text-gray-100">Kontakte</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">Alle Ansprechpartner und Kontaktpersonen</p>
         </div>
         <Button className="bg-blue-600 hover:bg-blue-700">
           <Plus className="w-4 h-4 mr-2" />
@@ -55,7 +62,7 @@ export function ContactsView() {
         <CardContent>
           <div className="mb-4">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-gray-500" />
               <Input
                 placeholder="Kontakte suchen..."
                 value={searchTerm}
@@ -71,32 +78,32 @@ export function ContactsView() {
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">
                     <Avatar className="w-12 h-12">
-                      <AvatarFallback className="bg-blue-600 text-white">
+                      <AvatarFallback className="bg-blue-600 dark:bg-blue-500 text-white">
                         {getInitials(contact.name)}
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-gray-900">{contact.name}</h3>
-                      <p className="text-gray-500">{contact.role}</p>
+                      <h3 className="text-gray-900 dark:text-gray-100">{contact.name}</h3>
+                      <p className="text-gray-500 dark:text-gray-400">{contact.role}</p>
                     </div>
                   </div>
 
                   <div className="mt-4 space-y-2">
-                    <div className="flex items-center gap-2 text-gray-600">
+                    <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
                       <Building2 className="w-4 h-4 flex-shrink-0" />
                       <span className="truncate text-sm">{contact.company}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-gray-600">
+                    <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
                       <Mail className="w-4 h-4 flex-shrink-0" />
                       <span className="truncate text-sm">{contact.email}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-gray-600">
+                    <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
                       <Phone className="w-4 h-4 flex-shrink-0" />
                       <span className="text-sm">{contact.phone}</span>
                     </div>
                   </div>
 
-                  <div className="flex gap-2 mt-4 pt-4 border-t border-gray-200">
+                  <div className="flex gap-2 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                     <Button variant="outline" className="flex-1" size="sm">
                       <Mail className="w-4 h-4 mr-1" />
                       E-Mail

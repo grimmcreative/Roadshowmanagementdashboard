@@ -3,8 +3,16 @@ import { Calendar, ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
+import { useStyle } from '../contexts/StyleContext';
+import { PlanningViewModern } from './PlanningViewModern';
 
 export function PlanningView() {
+  const { styleMode } = useStyle();
+
+  if (styleMode === 'modern') {
+    return <PlanningViewModern />;
+  }
+
   const [selectedMonth, setSelectedMonth] = useState(new Date());
 
   const monthNames = [
