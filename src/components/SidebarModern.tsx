@@ -27,7 +27,7 @@ export function SidebarModern({ currentView, onNavigate }: SidebarModernProps) {
   ];
 
   return (
-    <aside className="w-72 bg-white dark:bg-[#1e1e1e] border-r border-gray-100 dark:border-[#2a2a2a] flex flex-col">
+    <aside className="w-72 h-screen bg-white dark:bg-[#1e1e1e] border-r border-gray-100 dark:border-[#2a2a2a] flex flex-col">
       {/* Logo Section */}
       <div className="p-6 border-b border-gray-100 dark:border-[#2a2a2a]">
         <motion.div 
@@ -45,7 +45,7 @@ export function SidebarModern({ currentView, onNavigate }: SidebarModernProps) {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-4">
+      <nav className="flex-1 p-4 overflow-y-auto">
         <div className="space-y-2">
           {menuItems.map((item, index) => {
             const Icon = item.icon;

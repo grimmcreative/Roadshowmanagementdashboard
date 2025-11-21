@@ -23,6 +23,7 @@ type ViewType = 'dashboard' | 'tours' | 'roadshows' | 'projects' | 'companies' |
 function AppContent() {
   const [currentView, setCurrentView] = useState<ViewType>('dashboard');
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { styleMode } = useStyle();
 
   const handleViewProject = (projectId: string) => {
@@ -30,15 +31,36 @@ function AppContent() {
     setCurrentView('project-detail');
   };
 
+  const handleNavigate = (view: ViewType) => {
+    setCurrentView(view);
+    setMobileMenuOpen(false); // Close mobile menu on navigation
+  };
+
   return (
     <div className={`flex h-screen ${styleMode === 'modern' ? 'bg-gray-100 dark:bg-[#141414]' : 'bg-gray-50 dark:bg-gray-900'}`}>
-      <Sidebar currentView={currentView} onNavigate={setCurrentView} />
+      {/* Desktop Sidebar */}
+      <div className="hidden lg:block">
+        <Sidebar currentView={currentView} onNavigate={handleNavigate} />
+      </div>
+
+      {/* Mobile Sidebar Overlay */}
+      {mobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+      
+      {/* Mobile Sidebar */}
+      <div className={`fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 lg:hidden ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <Sidebar currentView={currentView} onNavigate={handleNavigate} />
+      </div>
       
       <div className="flex-1 flex flex-col overflow-hidden">
-        <TopBar />
+        <TopBar onMenuClick={() => setMobileMenuOpen(!mobileMenuOpen)} />
         
-        <main className="flex-1 overflow-y-auto p-6">
-          {currentView === 'dashboard' && <Dashboard onNavigate={setCurrentView} />}
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6">
+          {currentView === 'dashboard' && <Dashboard onNavigate={handleNavigate} />}
           {currentView === 'tours' && <TourPlanner />}
           {currentView === 'roadshows' && <RoadshowList />}
           {currentView === 'projects' && <ProjectsView onViewProject={handleViewProject} />}

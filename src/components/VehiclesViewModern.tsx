@@ -36,7 +36,7 @@ export function VehiclesViewModern() {
   return (
     <div className="space-y-6">
       <motion.div 
-        className="flex items-center justify-between"
+        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
       >
@@ -45,7 +45,7 @@ export function VehiclesViewModern() {
           <p className="text-gray-500 dark:text-[#8e8e8e] mt-2">Verwaltung aller Zugmaschinen und Auflieger</p>
         </div>
         <motion.button
-          className="px-6 py-3 bg-gradient-to-r from-[#8B1A10] to-[#BF2011] text-white rounded-xl font-medium shadow-lg shadow-red-900/20 hover:shadow-xl hover:shadow-red-900/30 transition-all"
+          className="px-6 py-3 bg-gradient-to-r from-[#8B1A10] to-[#BF2011] text-white rounded-xl font-medium shadow-lg shadow-red-900/20 hover:shadow-xl hover:shadow-red-900/30 transition-all w-full sm:w-auto"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
@@ -53,7 +53,7 @@ export function VehiclesViewModern() {
         </motion.button>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {stats.map((stat, index) => (
           <motion.div
             key={index}
@@ -77,7 +77,8 @@ export function VehiclesViewModern() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Desktop Grid View */}
+      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-2 gap-6">
         {vehicles.map((vehicle, index) => (
           <motion.div
             key={vehicle.id}
@@ -113,6 +114,60 @@ export function VehiclesViewModern() {
                   <div className="flex items-center justify-between">
                     <span className="text-gray-500 dark:text-[#8e8e8e] text-sm">Versicherung:</span>
                     <span className={`font-medium ${vehicle.insurance === 'Aktiv' ? 'text-green-600 dark:text-green-400' : 'text-orange-600 dark:text-orange-400'}`}>
+                      {vehicle.insurance}
+                    </span>
+                  </div>
+                </div>
+
+                <motion.button
+                  className="w-full mt-4 px-4 py-2.5 bg-gray-100 dark:bg-[#2a2a2a] text-gray-700 dark:text-[#b8b8b8] rounded-xl hover:bg-gray-200 dark:hover:bg-[#333333] transition-colors font-medium"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Details anzeigen
+                </motion.button>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Mobile Card View */}
+      <div className="md:hidden space-y-4">
+        {vehicles.map((vehicle, index) => (
+          <motion.div
+            key={vehicle.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 + index * 0.1 }}
+          >
+            <Card>
+              <CardContent className="p-5">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+                      <Car className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-gray-900 dark:text-white font-semibold">{vehicle.plate}</h3>
+                      <p className="text-gray-500 dark:text-[#8e8e8e] text-sm mt-1">{vehicle.type}</p>
+                    </div>
+                  </div>
+                  {getStatusBadge(vehicle.status)}
+                </div>
+
+                <div className="space-y-3 p-4 bg-gray-50 dark:bg-[#2a2a2a] rounded-xl">
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-500 dark:text-[#8e8e8e] text-sm">Marke:</span>
+                    <span className="text-gray-900 dark:text-white font-medium text-sm">{vehicle.brand}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-500 dark:text-[#8e8e8e] text-sm">TÜV bis:</span>
+                    <span className="text-gray-900 dark:text-white font-medium text-sm">{vehicle.inspection}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-500 dark:text-[#8e8e8e] text-sm">Versicherung:</span>
+                    <span className={`font-medium text-sm ${vehicle.insurance === 'Aktiv' ? 'text-green-600 dark:text-green-400' : 'text-orange-600 dark:text-orange-400'}`}>
                       {vehicle.insurance}
                     </span>
                   </div>

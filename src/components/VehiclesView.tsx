@@ -36,17 +36,17 @@ export function VehiclesView() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-gray-900 dark:text-gray-100">Fahrzeuge</h1>
           <p className="text-gray-500 dark:text-gray-400 mt-1">Verwaltung aller Zugmaschinen und Auflieger</p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto">
           Fahrzeug hinzufügen
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
@@ -87,7 +87,8 @@ export function VehiclesView() {
           <CardTitle>Fahrzeugübersicht</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
+          {/* Desktop Table View */}
+          <div className="hidden md:block overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-gray-200 dark:border-gray-700">
@@ -142,6 +143,62 @@ export function VehiclesView() {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Mobile Card View */}
+          <div className="md:hidden space-y-4">
+            {vehicles.map((vehicle) => (
+              <Card key={vehicle.id} className="border border-gray-200 dark:border-gray-700">
+                <CardContent className="p-4">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-blue-500 dark:bg-blue-600 rounded-lg flex items-center justify-center">
+                        <Car className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-gray-900 dark:text-gray-100 font-semibold">{vehicle.plate}</h3>
+                        <p className="text-gray-500 dark:text-gray-400 text-sm">{vehicle.type}</p>
+                      </div>
+                    </div>
+                    {getStatusBadge(vehicle.status)}
+                  </div>
+
+                  <div className="space-y-2 pt-3 border-t border-gray-100 dark:border-gray-700">
+                    <div className="flex justify-between">
+                      <span className="text-gray-500 dark:text-gray-400 text-sm">Marke:</span>
+                      <span className="text-gray-900 dark:text-gray-100 text-sm font-medium">{vehicle.brand}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-500 dark:text-gray-400 text-sm">HU/AU:</span>
+                      <div className="flex items-center gap-2">
+                        <Calendar className="w-4 h-4 text-gray-400 dark:text-gray-500" />
+                        <span className="text-gray-900 dark:text-gray-100 text-sm">{vehicle.inspection}</span>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-500 dark:text-gray-400 text-sm">Versicherung:</span>
+                      <div className="flex items-center gap-2">
+                        {vehicle.insurance === 'Aktiv' ? (
+                          <>
+                            <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400" />
+                            <span className="text-green-700 dark:text-green-400 text-sm">{vehicle.insurance}</span>
+                          </>
+                        ) : (
+                          <>
+                            <AlertCircle className="w-4 h-4 text-orange-600 dark:text-orange-400" />
+                            <span className="text-orange-700 dark:text-orange-400 text-sm">{vehicle.insurance}</span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <Button variant="ghost" size="sm" className="w-full mt-3 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300">
+                    Details anzeigen
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </CardContent>
       </Card>
